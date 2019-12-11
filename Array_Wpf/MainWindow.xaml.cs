@@ -28,14 +28,16 @@ namespace Array_Wpf
             if (File.Exists("Array.txt"))
                 using (System.IO.StreamReader reader = new System.IO.StreamReader("Array.txt"))
                 {
-                string line = reader.ReadLine();
-                txt_Lunghezza.Text = $"{line}";
-                int[] array = new int[int.Parse(line)];
-                while ((line = reader.ReadLine()) != null)
-                {
-                    lbl_risposta.Content += $"{line},";
+                    string line = reader.ReadLine();
+                    txt_Lunghezza.Text = $"{line}";
+                    int[] array = new int[int.Parse(line)];
+                    int i = 0;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        array[i++] = int.Parse(line);
+                    }
+                    StampaArray(array);
                 }
-                }         
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -46,6 +48,20 @@ namespace Array_Wpf
             {
                 Array[i] = random.Next();
             }
+            StampaArray(Array);
+            StreamWriter sw = new StreamWriter("Array.txt", false, Encoding.UTF8);
+
+            sw.WriteLine(Array.Length);
+            for (int i = 0; i < Array.Length; i++)
+            {
+                sw.WriteLine(Array[i]);
+            }
+            sw.Flush();
+            sw.Close();
+        }
+
+        private void StampaArray(int[] Array)
+        {
             lbl_risposta.Content += "[";
             for (int i = 0; i < Array.Length; i++)
             {
@@ -57,15 +73,6 @@ namespace Array_Wpf
                     lbl_risposta.Content += $" { Array[i]} ";
             }
             lbl_risposta.Content += "]";
-            StreamWriter sw = new StreamWriter("Array.txt",false,Encoding.UTF8);
-
-            sw.WriteLine(Array.Length);
-            for (int i = 0; i < Array.Length; i++)
-            {
-                sw.WriteLine(Array[i]);
-            }
-            sw.Flush();
-            sw.Close();
         }
     }
 }

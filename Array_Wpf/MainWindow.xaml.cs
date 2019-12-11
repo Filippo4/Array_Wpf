@@ -25,13 +25,17 @@ namespace Array_Wpf
         public MainWindow()
         {
             InitializeComponent();
-            string line;
-            StreamReader sr = new StreamReader("Array.txt");
-
-            while ((line = sr.ReadLine()) != null)
-            {
-                int n = int.Parse(line);
-            }
+            if (File.Exists("Array.txt"))
+                using (System.IO.StreamReader reader = new System.IO.StreamReader("Array.txt"))
+                {
+                string line = reader.ReadLine();
+                txt_Lunghezza.Text = $"{line}";
+                int[] array = new int[int.Parse(line)];
+                while ((line = reader.ReadLine()) != null)
+                {
+                    lbl_risposta.Content += $"{line},";
+                }
+                }         
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -53,7 +57,7 @@ namespace Array_Wpf
                     lbl_risposta.Content += $" { Array[i]} ";
             }
             lbl_risposta.Content += "]";
-            StreamWriter sw = new StreamWriter("Array.txt");
+            StreamWriter sw = new StreamWriter("Array.txt",false,Encoding.UTF8);
 
             sw.WriteLine(Array.Length);
             for (int i = 0; i < Array.Length; i++)

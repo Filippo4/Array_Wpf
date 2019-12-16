@@ -74,5 +74,12 @@ namespace Array_Wpf
             }
             lbl_risposta.Content += "]";
         }
+
+        private void btn_reset_Click(object sender, RoutedEventArgs e)
+        {
+            lbl_risposta.Content = "";
+            txt_Lunghezza.Clear();
+            string  = null;
+        }
     }
 }
